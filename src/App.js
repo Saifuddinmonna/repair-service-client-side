@@ -6,6 +6,8 @@ import Home from './components/Home/Home';
 import ErrorPage from './components/ErrorPage/ErrorPage';
 import Services from './components/Services/Services';
 import Blog from './components/Blog/Blog';
+import RegisterPage from './components/RegisterPage/RegisterPage';
+import LoginPage from './components/LoginPage/LoginPage';
 
 function App() {
   const router = createBrowserRouter([
@@ -25,6 +27,14 @@ function App() {
 				{
 					path: "/services",
 					element: <Services></Services>,
+				},
+				{
+					path: "/login",
+					element: <LoginPage></LoginPage>,
+				},
+				{
+					path: "/register",
+					element: <RegisterPage></RegisterPage>,
 				},
 			],
 		},

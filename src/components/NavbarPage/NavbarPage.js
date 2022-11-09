@@ -33,6 +33,12 @@ const NavbarPage = () => {
 						<NavLink to="/services">
 							<a>Services</a>
 						</NavLink>
+						<NavLink to="/login">
+							<a>Login</a>
+						</NavLink>
+						<NavLink to="/register">
+							<a>Register</a>
+						</NavLink>
 					</ul>
 				</div>
 			</div>
@@ -40,28 +46,35 @@ const NavbarPage = () => {
 				<a className="btn btn-ghost normal-case text-xl py-2 ">
 					daisyUI
 				</a>
-				<ul
-					tabIndex={0}
-					className=" normal-case text-xl py-2  ">
+				<ul tabIndex={0} className=" normal-case text-xl py-2  ">
 					<NavLink
-						className="btn btn-ghost my-3 p-2 shadow  rounded-box"
+						className="btn btn-ghost my-3 py-2 shadow  rounded-box"
 						to="/">
 						<a>Homepage</a>
 					</NavLink>
 					<NavLink
-						className="btn btn-ghost my-3 p-2 shadow  rounded-box"
+						className="btn btn-ghost my-3 py-2 shadow  rounded-box"
 						to={"/blog"}>
 						<a>Blog</a>
 					</NavLink>
 					<NavLink
-						className="btn btn-ghost my-3 p-2 shadow  rounded-box"
+						className="btn btn-ghost my-3 py-2 shadow  rounded-box"
 						to="/services">
 						<a>Services</a>
+					</NavLink>
+					<NavLink
+						className="btn btn-ghost my-3 py-2 shadow  rounded-box"
+						to="/login">
+						<a>Login</a>
+					</NavLink>
+					<NavLink
+						className="btn btn-ghost my-3 py-2 shadow  rounded-box"
+						to="/register">
+						<a>Register</a>
 					</NavLink>
 				</ul>
 			</div>
 			<div className="navbar-end">
-				
 				<button className="btn btn-ghost btn-circle">
 					<div className="indicator">
 						<svg
