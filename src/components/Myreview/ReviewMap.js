@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 
 const ReviewMap = ({ order, handleDelete, handleStatusUpdate }) => {
-	const { _id, serviceName, phone, customer, price, service, status } = order;
+	const { _id, name, phone, customer, price, service, status } = order;
 	const [orderService, setOrderService] = useState({});
 
 	useEffect(() => {
-		fetch(`https://genius-car-server-neon.vercel.app/services/${service}`)
+		fetch(`http://localhost:3000/services/${service}`)
 			.then((res) => res.json())
 			.then((data) => setOrderService(data));
 	}, [service]);
+	console.log(order);
 
 	return (
 		<tr>
@@ -40,7 +41,7 @@ const ReviewMap = ({ order, handleDelete, handleStatusUpdate }) => {
 				</div>
 			</td>
 			<td>
-				{serviceName}
+				{name}
 				<br />
 				<span className="badge badge-ghost badge-sm">${price}</span>
 			</td>

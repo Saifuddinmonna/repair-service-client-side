@@ -5,11 +5,12 @@ import ReviewMap from "./ReviewMap";
 
 const MyReview= () => {
 	const { user, logOut } = useContext(AuthContext);
-	const [orders, setOrders] = useState([]);
+        const [orders, setOrders] = useState([]);
+        console.log(orders);
 
 	useEffect(() => {
 		fetch(
-			`http://localhost:5000/myreview?email=${user?.email}`,
+			`https://assignment-11-server-site-smoky.vercel.app/myreview?email=${user?.email}`,
 			{
 				headers: {
 					authorization: `Bearer ${localStorage.getItem(
@@ -34,7 +35,7 @@ const MyReview= () => {
 			"Are you sure, you want to cancel this order",
 		);
 		if (proceed) {
-			fetch(`http://localhost:5000/myreview/${id}`, {
+			fetch(`https://assignment-11-server-site-smoky.vercel.app/myreview/${id}`, {
 				method: "DELETE",
 				headers: {
 					authorization: `Bearer ${localStorage.getItem(
@@ -56,7 +57,7 @@ const MyReview= () => {
 	};
 
 	const handleStatusUpdate = (id) => {
-		fetch(`http://localhost:5000/myreview/${id}`, {
+		fetch(`https://assignment-11-server-site-smoky.vercel.app/myreview/${id}`, {
 			method: "PATCH",
 			headers: {
 				"content-type": "application/json",
@@ -87,8 +88,8 @@ const MyReview= () => {
 						<tr>
 							<th></th>
 							<th>Name</th>
-							<th>Job</th>
-							<th>Favorite Color</th>
+							<th>Price</th>
+							<th>Problems</th>
 							<th></th>
 						</tr>
 					</thead>

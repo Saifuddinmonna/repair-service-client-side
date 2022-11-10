@@ -104,7 +104,7 @@ const NavbarPage = () => {
 								<>
 									<NavLink
 										className="px-2 text-decoration-none text-white"
-										to="/signup">
+										to="/register">
 										Register
 									</NavLink>
 									<NavLink
@@ -176,7 +176,7 @@ const NavbarPage = () => {
 								<>
 									<NavLink
 										className="px-2 text-decoration-none text-white"
-										to="/signup">
+										to="/register">
 										Register
 									</NavLink>
 									<NavLink

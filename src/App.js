@@ -11,6 +11,7 @@ import LoginPage from "./components/LoginPage/LoginPage";
 import SingleServiceDetails from "./components/SignleServiceDetails/SingleServiceDetails";
 import AddService from "./components/Addservice/AddService";
 import MyReview from "./components/Myreview/MyReview";
+import PrivateRoute from "./routes/PrivateRouter/PrivateRoute";
 
 function App() {
 	const router = createBrowserRouter([
@@ -41,22 +42,30 @@ function App() {
 				},
 				{
 					path: "/myreview",
-					element: <MyReview></MyReview>,
+					element: (
+						<PrivateRoute>
+							<MyReview></MyReview>
+						</PrivateRoute>
+					),
 				},
 				{
 					path: "/addservice",
 					loader: async ({ params }) => {
 						return fetch(
-							`http://localhost:5000/services/${params.id}`,
+							`https://assignment-11-server-site-smoky.vercel.app/services/${params.id}`,
 						);
 					},
-					element: <AddService></AddService>,
+					element: (
+						<PrivateRoute>
+							<AddService></AddService>
+						</PrivateRoute>
+					),
 				},
 				{
 					path: "/services/:id",
 					loader: async ({ params }) => {
 						return fetch(
-							`http://localhost:5000/services/${params.id}`,
+							`https://assignment-11-server-site-smoky.vercel.app/services/${params.id}`,
 						);
 					},
 

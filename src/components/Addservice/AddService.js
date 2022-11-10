@@ -24,14 +24,19 @@ const AddService = () => {
 			message,
 		};
 
-		fetch("http://localhost:5000/services/addservice", {
-			method: "POST",
-			headers: {
-				"content-type": "application/json",
-				authorization: `Bearer ${localStorage.getItem("genius-token")}`,
+		fetch(
+			"https://assignment-11-server-site-smoky.vercel.app/services/addservice",
+			{
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+					authorization: `Bearer ${localStorage.getItem(
+						"genius-token",
+					)}`,
+				},
+				body: JSON.stringify(order),
 			},
-			body: JSON.stringify(order),
-		})
+		)
 			.then((res) => res.json())
 			.then((data) => {
 				console.log(data);

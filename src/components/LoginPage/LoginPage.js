@@ -15,7 +15,7 @@ const Login = () => {
 	const [errorMessageDisplaycode, setErrorMessageDisplaycode] = useState();
 	const {
 		signinWithGoogle,
-		signinWithGithub,
+
 		functionsignInWithEmailAndPassword,
 		user,
 	} = useContext(AuthContext);
@@ -32,25 +32,41 @@ const Login = () => {
 		const password = form.password.value;
 		console.log("emailpassword", email, password);
 
-
-		
 		functionsignInWithEmailAndPassword(email, password)
 			.then((result) => {
 				const user = result.user;
 				console.log(user);
 
 				form.reset("");
+				const currentUser = {
+					email: user?.email,
+				};
 
 				toast("login successful !", {
 					position: "top-right",
 					autoClose: 300,
 				});
 
+				// get jwt token
+				fetch(
+					"https://assignment-11-server-site-smoky.vercel.app/jwt",
+					{
+						method: "POST",
+						headers: {
+							"content-type": "application/json",
+						},
+						body: JSON.stringify(currentUser),
+					},
+				)
+					.then((res) => res.json())
+					.then((data) => {
+						console.log(data);
+
+						localStorage.setItem("repair-token", data.token);
+						navigate(from, { replace: true });
+					});
+
 				setErrorMessageDisplay("");
-
-				// for (var i = 1; i < 10; i++) navigate(from, { replace: true });
-
-				// navigate(from, { replace: true });
 			})
 			.catch((error) => {
 				const errorCode = error.code;
@@ -58,7 +74,6 @@ const Login = () => {
 				setErrorMessageDisplay(errorMessage);
 				// form.reset("");
 			});
-		
 	};
 
 	useEffect(() => {
@@ -71,6 +86,27 @@ const Login = () => {
 		signinWithGoogle()
 			.then((result) => {
 				const user = result.user;
+				const currentUser = {
+					email: user?.email,
+				};
+				// get jwt token
+				fetch(
+					"https://assignment-11-server-site-smoky.vercel.app/jwt",
+					{
+						method: "POST",
+						headers: {
+							"content-type": "application/json",
+						},
+						body: JSON.stringify(currentUser),
+					},
+				)
+					.then((res) => res.json())
+					.then((data) => {
+						console.log(data);
+
+						localStorage.setItem("repair-token", data.token);
+						navigate(from, { replace: true });
+					});
 				navigate(from, { replace: true });
 				console.log(user);
 				toast("login successful !", {
@@ -86,8 +122,6 @@ const Login = () => {
 				setErrorMessageDisplay(errorMessage);
 			});
 	};
-	
-	
 
 	return (
 		<div>
@@ -166,8 +200,6 @@ const Login = () => {
 								Login with Google
 							</button>
 						</div>
-						
-						
 					</div>
 				</div>
 			</div>
