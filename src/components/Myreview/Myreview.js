@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../ContextProvider/ContextProvider";
+import ReviewMap from "./ReviewMap";
 
-import OrderRow from "./OrderRow";
 
 const MyReview= () => {
 	const { user, logOut } = useContext(AuthContext);
@@ -9,7 +9,7 @@ const MyReview= () => {
 
 	useEffect(() => {
 		fetch(
-			`https://genius-car-server-neon.vercel.app/orders?email=${user?.email}`,
+			`http://localhost:5000/myreview?email=${user?.email}`,
 			{
 				headers: {
 					authorization: `Bearer ${localStorage.getItem(
@@ -34,7 +34,7 @@ const MyReview= () => {
 			"Are you sure, you want to cancel this order",
 		);
 		if (proceed) {
-			fetch(`https://genius-car-server-neon.vercel.app/orders/${id}`, {
+			fetch(`http://localhost:5000/myreview/${id}`, {
 				method: "DELETE",
 				headers: {
 					authorization: `Bearer ${localStorage.getItem(
@@ -56,7 +56,7 @@ const MyReview= () => {
 	};
 
 	const handleStatusUpdate = (id) => {
-		fetch(`https://genius-car-server-neon.vercel.app/orders/${id}`, {
+		fetch(`http://localhost:5000/myreview/${id}`, {
 			method: "PATCH",
 			headers: {
 				"content-type": "application/json",
@@ -94,13 +94,13 @@ const MyReview= () => {
 					</thead>
 					<tbody>
 						{orders.map((order) => (
-							<OrderRow
+							<ReviewMap
 								key={order._id}
 								order={order}
 								handleDelete={handleDelete}
 								handleStatusUpdate={
 									handleStatusUpdate
-								}></OrderRow>
+								}></ReviewMap>
 						))}
 					</tbody>
 				</table>

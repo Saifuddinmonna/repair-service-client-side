@@ -10,6 +10,7 @@ import RegisterPage from "./components/RegisterPage/RegisterPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import SingleServiceDetails from "./components/SignleServiceDetails/SingleServiceDetails";
 import AddService from "./components/Addservice/AddService";
+import MyReview from "./components/Myreview/MyReview";
 
 function App() {
 	const router = createBrowserRouter([
@@ -37,6 +38,10 @@ function App() {
 				{
 					path: "/register",
 					element: <RegisterPage></RegisterPage>,
+				},
+				{
+					path: "/myreview",
+					element: <MyReview></MyReview>,
 				},
 				{
 					path: "/addservice",
