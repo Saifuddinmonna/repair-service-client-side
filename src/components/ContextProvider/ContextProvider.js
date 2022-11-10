@@ -10,7 +10,7 @@ import {
 	signOut,
 	updateProfile,
 } from "firebase/auth";
-import app from "../../Firebase/Firebase.config";
+import app from "../../Firebase/FirebaseConfigeFile";
 import { useState } from "react";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
 	const [cart, setCart] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [darkmode, setDarkmode] = useState(false);
-	const [userphotooptional, setUserphotooptional] = useState(null);
+	// const [userphotooptional, setUserphotooptional] = useState(null);
 
 	const createUser = (email, password) => {
 		return createUserWithEmailAndPassword(auth, email, password);
@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
 	const [premiumAccess, setPremiumAccess] = useState([]);
 
 	const providerGoogle = new GoogleAuthProvider();
-	const providerGithub = new GithubAuthProvider();
+	// const providerGithub = new GithubAuthProvider();
 
 	const functionsignInWithEmailAndPassword = (email, password) => {
 		return signInWithEmailAndPassword(auth, email, password);
@@ -42,9 +42,9 @@ const AuthProvider = ({ children }) => {
 		return signInWithPopup(auth, providerGoogle);
 	};
 
-	const signinWithGithub = () => {
-		return signInWithPopup(auth, providerGithub);
-	};
+	// const signinWithGithub = () => {
+	// 	return signInWithPopup(auth, providerGithub);
+	// };
 	const Signouthandle = () => {
 		return signOut(auth);
 	};
@@ -96,11 +96,11 @@ const AuthProvider = ({ children }) => {
 		user,
 		createUser,
 		signinWithGoogle,
-		signinWithGithub,
+		
 		Signouthandle,
 		functionsignInWithEmailAndPassword,
 		premiumAccess,
-		userphotooptional,
+		
 
 		loading,
 		updateUserProfile,
