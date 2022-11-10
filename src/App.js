@@ -9,6 +9,7 @@ import Blog from "./components/Blog/Blog";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import SingleServiceDetails from "./components/SignleServiceDetails/SingleServiceDetails";
+import AddService from "./components/Addservice/AddService";
 
 function App() {
 	const router = createBrowserRouter([
@@ -38,9 +39,20 @@ function App() {
 					element: <RegisterPage></RegisterPage>,
 				},
 				{
+					path: "/addservice",
+					loader: async ({ params }) => {
+						return fetch(
+							`http://localhost:5000/services/${params.id}`,
+						);
+					},
+					element: <AddService></AddService>,
+				},
+				{
 					path: "/services/:id",
 					loader: async ({ params }) => {
-						return	fetch(`http://localhost:5000/services/${params.id}`);
+						return fetch(
+							`http://localhost:5000/services/${params.id}`,
+						);
 					},
 
 					element: <SingleServiceDetails></SingleServiceDetails>,

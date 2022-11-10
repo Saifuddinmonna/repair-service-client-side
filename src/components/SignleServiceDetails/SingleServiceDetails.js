@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const SingleServiceDetails = () => {
 	const singleService = useLoaderData({});
@@ -9,7 +9,6 @@ const SingleServiceDetails = () => {
 	console.log(singleService.data);
 	return (
 		<div className="grid grid-cols-2 ">
-			
 			<div>
 				<div className="card card-compact w-full bg-base-100 shadow-xl">
 					<h1 className="card-title text-center">{name}</h1>
@@ -27,18 +26,22 @@ const SingleServiceDetails = () => {
 								<p>Price : {price}</p>
 								<p> Rating : {rating}</p>
 							</div>
-							<button className="btn btn-primary">Buy Now</button>
+							<Link to="/addservice">
+								<button className="btn btn-primary">
+									Add service
+								</button>
+							</Link>
 						</div>
 					</div>
 				</div>
 			</div>
-                        <div>
-                                <h2>this is  reviewer section</h2>
-                                <div>
-                                        <h1>Others review</h1>
-                                </div>
-                                <div>Giving review us</div>
-                        </div>
+			<div>
+				<h2>this is reviewer section</h2>
+				<div>
+					<h1>Others review</h1>
+				</div>
+				<div>Giving review us</div>
+			</div>
 		</div>
 	);
 };
