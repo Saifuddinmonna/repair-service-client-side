@@ -86,6 +86,14 @@ const NavbarPage = () => {
 							/>
 						</svg>
 					</label>
+					<div className="w-10 rounded-full">
+						<img src="https://placeimg.com/80/80/people" />
+					</div>
+					<div className="flex-1">
+						<a className="btn btn-ghost normal-case text-xl">
+							 Repair Service
+						</a>
+					</div>
 					<ul
 						tabIndex={0}
 						className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
@@ -158,7 +166,7 @@ const NavbarPage = () => {
 			</div>
 			<div className="navbar-center">
 				<a className="btn btn-ghost normal-case text-xl py-2 ">
-					daisyUI
+					Repair Service
 				</a>
 				<NavLink to="/">
 					<a>Homepage</a>

@@ -16,7 +16,7 @@ const Home = () => {
 	}, []);
 	return (
 		<div>
-			<h2>this home page</h2>
+			
 			<div className="grid grid-cols-3 gap-2 border rounded shadow-md">
 				{services.map((service) => (
 					<ServiceCartForHome key={service._id} service={service}>
