@@ -12,6 +12,7 @@ import SingleServiceDetails from "./components/SignleServiceDetails/SingleServic
 import AddService from "./components/Addservice/AddService";
 import MyReview from "./components/Myreview/MyReview";
 import PrivateRoute from "./routes/PrivateRouter/PrivateRoute";
+import "react-photo-view/dist/react-photo-view.css";
 
 function App() {
 	const router = createBrowserRouter([
