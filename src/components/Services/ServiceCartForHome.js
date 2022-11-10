@@ -20,11 +20,7 @@ const ServiceCartForHome = ({ service }) => {
 						<div className="badge badge-outline">Service Price : {price}</div>
                                                 <div className="badge badge-outline"> Service Rating :{ rating}</div>
                                         </div>
-                                        <div>
-                                                <Link to="/servicedetails">
-                                                        <button className="btn btn-primary d-block w-full">Details</button>
-                                                </Link>
-                                        </div>
+                                        
 				</div>
 			</div>
 		</div>

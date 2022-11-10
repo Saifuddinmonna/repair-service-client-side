@@ -8,6 +8,7 @@ import Services from './components/Services/Services';
 import Blog from './components/Blog/Blog';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import LoginPage from './components/LoginPage/LoginPage';
+import SingleServiceDetails from './components/SignleServiceDetails/SingleServiceDetails';
 
 function App() {
   const router = createBrowserRouter([
@@ -35,6 +36,14 @@ function App() {
 				{
 					path: "/register",
 					element: <RegisterPage></RegisterPage>,
+				},
+				{
+					path: "/services:_id",
+					loader: async ({ params }) => {
+						fetch(`http://localhost:3000/services${params._id}`);
+					},
+
+					element: <SingleServiceDetails></SingleServiceDetails>,
 				},
 			],
 		},

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import ServiceCartForHome from "../Services/ServiceCartForHome";
 
 const Home = () => {
@@ -7,7 +7,7 @@ const Home = () => {
 	console.log(services);
 
 	useEffect(() => {
-		fetch("http://localhost:5000/services")
+		fetch("http://localhost:5000/home")
 			.then((res) => res.json())
 			.then((data) => setServices(data))
 			.catch((error) => {
@@ -24,7 +24,13 @@ const Home = () => {
 					</ServiceCartForHome>
 				))}
 			</div>
-
+			<div>
+				<Link to="/services">
+					<button className="btn btn-primary d-block w-full">
+						See All
+					</button>
+				</Link>
+			</div>
 			<div
 				className="hero min-h-screen"
 				style={{
