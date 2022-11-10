@@ -27,7 +27,7 @@ const ServicesLoader = ({service}) => {
 							</div>
 						</div>
 						<div>
-							<Link to={`/services${_id}`}>
+							<Link to={`/services/${_id}`}>
 								<button className="btn btn-primary d-block w-full">
 									Details
 								</button>

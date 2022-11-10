@@ -2,40 +2,43 @@ import React from "react";
 import { useLoaderData } from "react-router-dom";
 
 const SingleServiceDetails = () => {
-	const singleService = useLoaderData();
-	// const {
-	//         img1, img2, details, name, price, rating, _id
-	// } = singleService;
-	console.log(singleService);
+	const singleService = useLoaderData({});
+	const {
+	        img1, img2, details, name, price, rating, _id
+	} = singleService.data;
+	console.log(singleService.data);
 	return (
-		<div>
-			<h2>this is signle service</h2>
+		<div className="grid grid-cols-2 ">
+			
 			<div>
-				<div
-					className="hero min-h-screen"
-					style={{
-						backgroundImage: `url("https://placeimg.com/1000/800/arch")`,
-					}}>
-					<div className="hero-overlay bg-opacity-60"></div>
-					<div className="hero-content text-center text-neutral-content">
-						<div className="max-w-md">
-							<h1 className="mb-5 text-5xl font-bold">
-								Hello there
-							</h1>
-							<p className="mb-5">
-								Provident cupiditate voluptatem et in. Quaerat
-								fugiat ut assumenda excepturi exercitationem
-								quasi. In deleniti eaque aut repudiandae et a id
-								nisi.
-							</p>
-							<button className="btn btn-primary">
-								Get Started
-							</button>
+				<div className="card card-compact w-full bg-base-100 shadow-xl">
+					<h1 className="card-title text-center">{name}</h1>
+					<figure>
+						<img src={img1} alt="Shoes" />
+					</figure>
+					<div className="card-body">
+						<h2 className="card-title">{name}</h2>
+						<figure>
+							<img src={img2} alt="Shoes" />
+						</figure>
+						<p>{details}</p>
+						<div className="card-actions justify-center">
+							<div>
+								<p>Price : {price}</p>
+								<p> Rating : {rating}</p>
+							</div>
+							<button className="btn btn-primary">Buy Now</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div></div>
+                        <div>
+                                <h2>this is  reviewer section</h2>
+                                <div>
+                                        <h1>Others review</h1>
+                                </div>
+                                <div>Giving review us</div>
+                        </div>
 		</div>
 	);
 };
