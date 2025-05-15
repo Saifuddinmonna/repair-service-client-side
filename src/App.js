@@ -3,7 +3,7 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "./components/Main/Main";
 import Home from "./components/Home/Home";
-import ErrorPage from "./components/ErrorPage/ErrorPage";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import Services from "./components/Services/Services";
 import Blog from "./components/Blog/Blog";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
@@ -17,12 +17,16 @@ import { Helmet } from "react-helmet";
 import EditReview from "./components/Myreview/EditReview";
 import { Toaster } from 'react-hot-toast';
 import Contact from "./components/Contact/Contact";
+import Legal from "./components/Legal/Legal";
+import About from "./components/About/About";
+import { handleApiError } from "./utils/errorHandler";
 
 function App() {
 	const router = createBrowserRouter([
 		{
 			path: "/",
 			element: <Main></Main>,
+			errorElement: <ErrorBoundary />,
 			children: [
 				{
 					path: "/",
@@ -40,6 +44,10 @@ function App() {
 				{
 					path: "/contact",
 					element: <Contact></Contact>,
+				},
+				{
+					path: "/about",
+					element: <About></About>,
 				},
 				{
 					path: "/login",
@@ -60,9 +68,18 @@ function App() {
 				{
 					path: "/addservice/:id",
 					loader: async ({ params }) => {
-						return fetch(
-							`https://assignment-11-server-site-smoky.vercel.app/services/${params.id}`,
-						);
+						try {
+							const response = await fetch(
+								`https://assignment-11-server-site-smoky.vercel.app/services/${params.id}`,
+							);
+							if (!response.ok) {
+								throw new Error(`HTTP error! status: ${response.status}`);
+							}
+							return response;
+						} catch (error) {
+							const handledError = handleApiError(error);
+							throw new Error(handledError.message);
+						}
 					},
 					element: (
 						<PrivateRoute>
@@ -70,29 +87,41 @@ function App() {
 						</PrivateRoute>
 					),
 				},
-				// {
-				// 	path: "/review/editreview",
-				// 	element: (
-				// 		<PrivateRoute>
-				// 			<EditReview></EditReview>
-				// 		</PrivateRoute>
-				// 	),
-				// },
 				{
 					path: "/services/:id",
 					loader: async ({ params }) => {
-						return fetch(
-							`https://assignment-11-server-site-smoky.vercel.app/services/${params.id}`,
-						);
+						try {
+							const response = await fetch(
+								`https://assignment-11-server-site-smoky.vercel.app/services/${params.id}`,
+							);
+							if (!response.ok) {
+								throw new Error(`HTTP error! status: ${response.status}`);
+							}
+							return response;
+						} catch (error) {
+							const handledError = handleApiError(error);
+							throw new Error(handledError.message);
+						}
 					},
-
 					element: <SingleServiceDetails></SingleServiceDetails>,
+				},
+				{
+					path: "/terms",
+					element: <Legal />,
+				},
+				{
+					path: "/privacy",
+					element: <Legal />,
+				},
+				{
+					path: "/cookies",
+					element: <Legal />,
 				},
 			],
 		},
 		{
 			path: "*",
-			element: <ErrorPage></ErrorPage>,
+			element: <ErrorBoundary />,
 		},
 	]);
 
