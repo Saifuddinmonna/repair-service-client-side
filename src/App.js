@@ -15,6 +15,9 @@ import PrivateRoute from "./routes/PrivateRouter/PrivateRoute";
 import "react-photo-view/dist/react-photo-view.css";
 import { Helmet } from "react-helmet";
 import EditReview from "./components/Myreview/EditReview";
+import { Toaster } from 'react-hot-toast';
+import Contact from "./components/Contact/Contact";
+
 function App() {
 	const router = createBrowserRouter([
 		{
@@ -33,6 +36,10 @@ function App() {
 				{
 					path: "/services",
 					element: <Services></Services>,
+				},
+				{
+					path: "/contact",
+					element: <Contact></Contact>,
 				},
 				{
 					path: "/login",
@@ -91,6 +98,7 @@ function App() {
 
 	return (
 		<div className="App">
+			<Toaster position="top-center" />
 			<RouterProvider router={router} />
 		</div>
 	);

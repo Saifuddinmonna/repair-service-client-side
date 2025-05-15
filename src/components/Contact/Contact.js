@@ -1,11 +1,94 @@
-import React from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Contact = () => {
-	const handleSubmit = (e) => {
+	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
+	const [formData, setFormData] = useState({
+		name: "",
+		email: "",
+		phone: "",
+		subject: "",
+		message: "",
+	});
+
+	const validateForm = () => {
+		if (!formData.name.trim()) {
+			toast.error("Please enter your name");
+			return false;
+		}
+		if (!formData.email.trim()) {
+			toast.error("Please enter your email");
+			return false;
+		}
+		if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+			toast.error("Please enter a valid email address");
+			return false;
+		}
+		if (!formData.subject.trim()) {
+			toast.error("Please enter a subject");
+			return false;
+		}
+		if (!formData.message.trim()) {
+			toast.error("Please enter your message");
+			return false;
+		}
+		return true;
+	};
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData((prev) => ({
+			...prev,
+			[name]: value,
+		}));
+	};
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// Add your form submission logic here
-		// For example, sending data to your backend
+		
+		if (!validateForm()) {
+			return;
+		}
+
+		setLoading(true);
+
+		try {
+			const response = await fetch("https://assignment-11-server-site-smoky.vercel.app/contact", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(formData),
+			});
+
+			const data = await response.json();
+
+			if (data.acknowledged) {
+				toast.success("Message sent successfully! We'll get back to you soon.");
+				// Reset form
+				setFormData({
+					name: "",
+					email: "",
+					phone: "",
+					subject: "",
+					message: "",
+				});
+				// Optional: Navigate back to home after successful submission
+				setTimeout(() => {
+					navigate("/");
+				}, 2000);
+			} else {
+				toast.error("Failed to send message. Please try again.");
+			}
+		} catch (error) {
+			console.error("Error sending message:", error);
+			toast.error("An error occurred. Please try again later.");
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -77,10 +160,10 @@ const Contact = () => {
 						<div className="bg-white rounded-xl shadow-lg p-8">
 							<h2 className="text-2xl font-bold text-gray-800 mb-6">Follow Us</h2>
 							<div className="flex space-x-4">
-								<a href="#" className="text-2xl hover:text-blue-600 transition-colors">📱</a>
-								<a href="#" className="text-2xl hover:text-blue-600 transition-colors">💻</a>
-								<a href="#" className="text-2xl hover:text-blue-600 transition-colors">📸</a>
-								<a href="#" className="text-2xl hover:text-blue-600 transition-colors">🐦</a>
+								<a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-blue-600 transition-colors">📱</a>
+								<a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-blue-600 transition-colors">💻</a>
+								<a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-blue-600 transition-colors">📸</a>
+								<a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-2xl hover:text-blue-600 transition-colors">🐦</a>
 							</div>
 						</div>
 					</div>
@@ -97,8 +180,11 @@ const Contact = () => {
 									type="text"
 									id="name"
 									name="name"
+									value={formData.name}
+									onChange={handleChange}
 									className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 									required
+									placeholder="Enter your name"
 								/>
 							</div>
 
@@ -110,8 +196,11 @@ const Contact = () => {
 									type="email"
 									id="email"
 									name="email"
+									value={formData.email}
+									onChange={handleChange}
 									className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 									required
+									placeholder="Enter your email"
 								/>
 							</div>
 
@@ -123,7 +212,10 @@ const Contact = () => {
 									type="tel"
 									id="phone"
 									name="phone"
+									value={formData.phone}
+									onChange={handleChange}
 									className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+									placeholder="Enter your phone number (optional)"
 								/>
 							</div>
 
@@ -135,8 +227,11 @@ const Contact = () => {
 									type="text"
 									id="subject"
 									name="subject"
+									value={formData.subject}
+									onChange={handleChange}
 									className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 									required
+									placeholder="Enter message subject"
 								/>
 							</div>
 
@@ -147,17 +242,30 @@ const Contact = () => {
 								<textarea
 									id="message"
 									name="message"
+									value={formData.message}
+									onChange={handleChange}
 									rows="4"
 									className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 									required
+									placeholder="Enter your message"
 								></textarea>
 							</div>
 
 							<button
 								type="submit"
-								className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
+								disabled={loading}
+								className={`w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 ${
+									loading ? "opacity-70 cursor-not-allowed" : ""
+								}`}
 							>
-								Send Message
+								{loading ? (
+									<div className="flex items-center justify-center">
+										<div className="w-5 h-5 border-t-2 border-white rounded-full animate-spin mr-2"></div>
+										Sending...
+									</div>
+								) : (
+									"Send Message"
+								)}
 							</button>
 						</form>
 					</div>
