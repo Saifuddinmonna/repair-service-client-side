@@ -9,13 +9,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { useEffect } from "react";
 import { AuthContext } from "../ContextProvider/ContextProvider";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
 	const [errorMessageDisplay, setErrorMessageDisplay] = useState();
 	const [errorMessageDisplaycode, setErrorMessageDisplaycode] = useState();
 	const {
 		signinWithGoogle,
-
+		setLoading,
 		functionsignInWithEmailAndPassword,
 		user,
 	} = useContext(AuthContext);
@@ -23,7 +24,7 @@ const Login = () => {
 	const location = useLocation();
 	const from = location.state?.from?.pathname || "/";
 	const navigate = useNavigate();
-	console.log(from);
+	// console.log(from);
 
 	const handlefunctionsignInWithEmailAndPassword = (e) => {
 		e.preventDefault();
@@ -31,22 +32,16 @@ const Login = () => {
 		const email = form.email.value;
 		const password = form.password.value;
 		console.log("emailpassword", email, password);
-
+		// setLoading(true);
 		functionsignInWithEmailAndPassword(email, password)
 			.then((result) => {
 				const user = result.user;
-				console.log(user);
 
-				form.reset("");
+				form.reset();
 				const currentUser = {
 					email: user?.email,
 				};
-
-				toast("login successful !", {
-					position: "top-right",
-					autoClose: 300,
-				});
-
+				console.log("thid is from current user", currentUser);
 				// get jwt token
 				fetch(
 					"https://assignment-11-server-site-smoky.vercel.app/jwt",
@@ -63,10 +58,16 @@ const Login = () => {
 						console.log(data);
 
 						localStorage.setItem("repair-token", data.token);
-						navigate(from, { replace: true });
+						// navigate(from, { replace: true });
 					});
-
+				toast("login successful !", {
+					position: "top-right",
+					autoClose: 300,
+				});
+				navigate(from, { replace: true });
+				console.log("from jwt page", user);
 				setErrorMessageDisplay("");
+				// setLoading(true);
 			})
 			.catch((error) => {
 				const errorCode = error.code;
@@ -125,6 +126,11 @@ const Login = () => {
 
 	return (
 		<div>
+			<Helmet>
+				<meta charSet="utf-8" />
+				<title>Login Page</title>
+				<link rel="canonical" href="http://mysite.com/example" />
+			</Helmet>
 			<div className="hero min-h-fit bg-base-200">
 				<div className="hero-content flex-col lg:flex-row-reverse">
 					<div className="text-center lg:text-left">
@@ -203,7 +209,7 @@ const Login = () => {
 					</div>
 				</div>
 			</div>
-			<ToastContainer />
+			<ToastContainer></ToastContainer>
 		</div>
 	);
 };

@@ -25,9 +25,12 @@ const AuthProvider = ({ children }) => {
 	const [cart, setCart] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [darkmode, setDarkmode] = useState(false);
+	const [addService, setAddService] = useState({});
+
 	// const [userphotooptional, setUserphotooptional] = useState(null);
 
 	const createUser = (email, password) => {
+		setLoading(true);
 		return createUserWithEmailAndPassword(auth, email, password);
 	};
 	const [premiumAccess, setPremiumAccess] = useState([]);
@@ -86,6 +89,7 @@ const AuthProvider = ({ children }) => {
 		const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
 			console.log("user inside state", currentuser);
 			setUser(currentuser);
+
 			setLoading(false);
 		});
 		return () => {
@@ -93,16 +97,21 @@ const AuthProvider = ({ children }) => {
 		};
 	}, []);
 
+	const handleAddservice = ({ singleserviceData }) => {
+		setAddService(singleserviceData);
+		console.log(addService);
+	};
+
 	const authInfo = {
 		user,
 		createUser,
 		signinWithGoogle,
-		
+
 		Signouthandle,
 		functionsignInWithEmailAndPassword,
 		premiumAccess,
-		
 
+		addService,
 		loading,
 		updateUserProfile,
 		handlehandleAddtoCart,

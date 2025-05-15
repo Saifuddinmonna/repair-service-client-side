@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-import {
-	HiArchiveBoxXMark,
-	HiOutlineArchiveBoxXMark,
-	HiPencilSquare,
-} from "react-icons/hi2";
 
-const ReviewMap = ({ order, handleDelete, handleStatusUpdate }) => {
+const EditReviewMap = ({ order, handleDelete, handleStatusUpdate }) => {
 	const {
 		_id,
 		name,
@@ -39,19 +33,16 @@ const ReviewMap = ({ order, handleDelete, handleStatusUpdate }) => {
 			</Helmet>
 			<td>
 				<label>
-					<Link to="/review/editreview">
-						{" "}
-						<button
-							onClick={() => handleStatusUpdate(_id)}
-							className="btn btn-sm btn-warning opacity-40">
-							<HiPencilSquare />
-						</button>{" "}
-					</Link>
+					<button
+						onClick={() => handleStatusUpdate(_id)}
+						className="btn border shadow-md btn-outline btn ">
+						Update
+					</button>
 					<button
 						onClick={() => handleDelete(_id)}
-						className="btn btn-sm btn-warning opacity-40">
-						<HiOutlineArchiveBoxXMark />
-					</button>{" "}
+						className="btn border shadow-md btn-outline m-1">
+						Delete
+					</button>
 				</label>
 			</td>
 			<td>
@@ -92,4 +83,4 @@ const ReviewMap = ({ order, handleDelete, handleStatusUpdate }) => {
 	);
 };
 
-export default ReviewMap;
+export default EditReviewMap;

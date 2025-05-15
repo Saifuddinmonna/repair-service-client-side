@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useContext } from "react";
+import { Helmet } from "react-helmet";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../ContextProvider/ContextProvider";
 
 const Signup = () => {
-	const { createUser, updateUserProfile } = useContext(AuthContext);
+	const { createUser, updateUserProfile, user } = useContext(AuthContext);
 	const [errorMessageDisplay, setErrorMessageDisplay] = useState("");
 	const [errorMessageDisplaycode, setErrorMessageDisplaycode] = useState("");
 	const [userName, setUserName] = useState();
 	const [userPhoto, setUserPhoto] = useState();
 	const navigate = useNavigate();
-	console.log(createUser);
+	// console.log(createUser);
 
 	const getFormValue = (e) => {
 		e.preventDefault();
@@ -26,6 +26,9 @@ const Signup = () => {
 
 		setUserName(name);
 		setUserPhoto(photourl);
+		const currentUser = {
+			email: user?.email,
+		};
 
 		createUser(email, password)
 			.then((result) => {
@@ -34,7 +37,25 @@ const Signup = () => {
 				hadlerupdateUserProfile({ name, photourl });
 				form.reset();
 				toast(" User  created Successfully! !", { autoClose: 200 });
-				navigate("/login");
+				// get jwt token
+				fetch(
+					"https://assignment-11-server-site-smoky.vercel.app/jwt",
+					{
+						method: "POST",
+						headers: {
+							"content-type": "application/json",
+						},
+						body: JSON.stringify(currentUser),
+					},
+				)
+					.then((res) => res.json())
+					.then((data) => {
+						console.log(data);
+
+						localStorage.setItem("repair-token", data.token);
+						// navigate(from, { replace: true });
+					});
+				navigate("/");
 			})
 			.catch((error) => {
 				const errorCode = error.code;
@@ -70,6 +91,11 @@ const Signup = () => {
 
 	return (
 		<div>
+			<Helmet>
+				<meta charSet="utf-8" />
+				<title>Registration Page</title>
+				<link rel="canonical" href="http://mysite.com/example" />
+			</Helmet>
 			<div className="hero min-h-fit bg-base-200">
 				<div className="hero-content flex-col lg:flex-row-reverse">
 					<div className="text-center lg:text-left">

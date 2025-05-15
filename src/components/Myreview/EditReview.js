@@ -2,15 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../ContextProvider/ContextProvider";
+import EditReviewMap from "./EditReviewMap";
 import ReviewMap from "./ReviewMap";
 
-const MyReview = () => {
-	const { user, logOut, Signouthandle, createUser } = useContext(AuthContext);
+const EditReview = () => {
+	const { user, logOut, Signouthandle } = useContext(AuthContext);
 	const [services, setServices] = useState([]);
-	// console.log("from review page", services);
-	// console.log("from my review", user);
-	const servicesort = services.reverse();
-	const sort = useEffect(() => {
+	console.log("from review page", services);
+	console.log("from my review", user);
+
+	useEffect(() => {
 		fetch(
 			`https://assignment-11-server-site-smoky.vercel.app/myreview?email=${user?.email}`,
 			{
@@ -24,20 +25,17 @@ const MyReview = () => {
 			.then((res) => {
 				if (res.status === 401 || res.status === 403) {
 					// return logOut();
-					// return Signouthandle();
+					return Signouthandle();
 				}
 				return res.json();
 			})
 			.then((data) => {
-				console.log("conme from data", data);
-				const sortedDesc = data.reverse();
-				console.log("sort time", sortedDesc);
-				setServices(sortedDesc);
+				setServices(data);
 			});
-	}, [user?.email, logOut, createUser]);
+	}, [user?.email, logOut]);
 
 	const userer = () => {
-		// console.log("orders", services);
+		console.log("orders", services);
 	};
 	userer();
 
@@ -97,7 +95,6 @@ const MyReview = () => {
 				}
 			});
 	};
-	console.log("consoele for time", new Date());
 
 	return (
 		<div className="p-3 rounded shadow-md border">
@@ -114,11 +111,13 @@ const MyReview = () => {
 					<Link
 						className="btn btn-warning opacity-40 rounded-3xl d-inline-block border-b-orange-200 shadow-sm"
 						to="/services">
-						{`${services?.length} === 0` ? (
-							<p>Please add a service</p>
-						) : (
-							<p>you</p>
-						)}
+						Please add a service
+					</Link>
+					<Link to="/myreview">
+						{" "}
+						<button className="btn  btn-warning opacity-60">
+							Back to Review Page
+						</button>{" "}
 					</Link>
 				</p>
 			) : (
@@ -147,14 +146,14 @@ const MyReview = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{services?.map((order) => (
-							<ReviewMap
+						{services.map((order) => (
+							<EditReviewMap
 								key={order._id}
 								order={order}
 								handleDelete={handleDelete}
 								handleStatusUpdate={
 									handleStatusUpdate
-								}></ReviewMap>
+								}></EditReviewMap>
 						))}
 					</tbody>
 				</table>
@@ -163,4 +162,4 @@ const MyReview = () => {
 	);
 };
 
-export default MyReview;
+export default EditReview;

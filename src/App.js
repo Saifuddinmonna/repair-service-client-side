@@ -13,7 +13,8 @@ import AddService from "./components/Addservice/AddService";
 import MyReview from "./components/Myreview/MyReview";
 import PrivateRoute from "./routes/PrivateRouter/PrivateRoute";
 import "react-photo-view/dist/react-photo-view.css";
-
+import { Helmet } from "react-helmet";
+import EditReview from "./components/Myreview/EditReview";
 function App() {
 	const router = createBrowserRouter([
 		{
@@ -50,7 +51,7 @@ function App() {
 					),
 				},
 				{
-					path: "/addservice",
+					path: "/addservice/:id",
 					loader: async ({ params }) => {
 						return fetch(
 							`https://assignment-11-server-site-smoky.vercel.app/services/${params.id}`,
@@ -62,6 +63,14 @@ function App() {
 						</PrivateRoute>
 					),
 				},
+				// {
+				// 	path: "/review/editreview",
+				// 	element: (
+				// 		<PrivateRoute>
+				// 			<EditReview></EditReview>
+				// 		</PrivateRoute>
+				// 	),
+				// },
 				{
 					path: "/services/:id",
 					loader: async ({ params }) => {
@@ -82,7 +91,6 @@ function App() {
 
 	return (
 		<div className="App">
-			<h2>my site is running</h2>
 			<RouterProvider router={router} />
 		</div>
 	);

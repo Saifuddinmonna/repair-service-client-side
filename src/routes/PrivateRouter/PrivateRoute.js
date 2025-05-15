@@ -6,7 +6,7 @@ import { AuthContext } from "../../components/ContextProvider/ContextProvider";
 const PrivateRoute = ({ children }) => {
 	const { user, loading } = useContext(AuthContext);
 	const location = useLocation();
-	console.log(location);
+	// console.log(location);
 	if (loading) {
 		return (
 			<div>
@@ -18,7 +18,7 @@ const PrivateRoute = ({ children }) => {
 			</div>
 		);
 	}
-	if (user && user.uid) {
+	if (user && user?.uid) {
 		return children;
 	}
 	return (

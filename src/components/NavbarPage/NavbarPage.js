@@ -1,13 +1,16 @@
 import React from "react";
 import { useEffect } from "react";
 // import { themeChange } from "theme-change";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
 
 import { FaBeer, BiUserCircle, FaGithub, FaUserCheck } from "react-icons/fa";
 
@@ -17,11 +20,16 @@ import { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { useState } from "react";
 import { AuthContext } from "../ContextProvider/ContextProvider";
+import { PhotoProvider, PhotoView } from "react-photo-view";
 
 const NavbarPage = () => {
 	const { user, Signouthandle, darkmodeHandler } = useContext(AuthContext);
 	const [toggler, setToggler] = useState(true);
 
+	const a = () => {
+		console.log(user);
+	};
+	a();
 	// useEffect(() => {
 	// 	if (toggler) {
 	// 		// setToggler(true);
@@ -68,195 +76,148 @@ const NavbarPage = () => {
 		// console.log("this is toggole value", toggolvalue);
 	};
 	return (
-		<div className="navbar bg-blue-500">
-			<div className="navbar-start">
-				<div className="dropdown">
-					<label tabIndex={0} className="btn btn-ghost btn-circle">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="h-5 w-5"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor">
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth="2"
-								d="M4 6h16M4 12h16M4 18h7"
+		<div>
+			<Navbar bg="primary" expand="lg">
+				<Container fluid>
+					<Navbar.Brand
+						className=" shadow-md rounded-3xl mx-2 px-2"
+						href="/">
+						RepairService
+					</Navbar.Brand>
+					<PhotoProvider>
+						<PhotoView
+							src={"https://i.ibb.co/h8ycstj/desktop-icon2.jpg"}>
+							<img
+								className="w-10 mask mask-hexagon-2 object-cover"
+								src={
+									"https://i.ibb.co/h8ycstj/desktop-icon2.jpg"
+								}
+								alt=""
 							/>
-						</svg>
-					</label>
-					<div className="w-10 rounded-full">
-						<img src="https://placeimg.com/80/80/people" />
-					</div>
-					<div className="flex-1">
-						<a className="btn btn-ghost normal-case text-xl">
-							 Repair Service
-						</a>
-					</div>
-					<ul
-						tabIndex={0}
-						className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-						<NavLink to="/">
-							<a>Homepage</a>
-						</NavLink>
-						<NavLink to={"/blog"}>
-							<a>Blog</a>
-						</NavLink>
-						<NavLink to="/services">
-							<a>Services</a>
-						</NavLink>
+						</PhotoView>
+					</PhotoProvider>
 
-						<div>
-							{!user?.uid ? (
+					<Navbar.Toggle aria-controls="navbarScroll" />
+					<Navbar.Collapse id="navbarScroll">
+						<Nav
+							className="me-auto my-2 my-lg-0"
+							style={{ maxHeight: "100px" }}
+							navbarScroll>
+							<NavLink
+								className="px-2 text-decoration-none text-white  shadow-md rounded  mx-2 px-2"
+								to="/">
+								Home
+							</NavLink>
+							<NavLink
+								className="px-2 text-decoration-none text-white  shadow-md rounded mx-2 px-2"
+								to={"/blog"}>
+								Blog
+							</NavLink>
+							<NavLink
+								className="px-2 text-decoration-none text-white  shadow-md rounded  mx-2 px-2"
+								to="/services">
+								Services
+							</NavLink>
+						</Nav>
+						{/* <Form className="d-flex">
+						<Form.Control
+							type="search"
+							placeholder="Search"
+							className="me-2"
+							aria-label="Search"
+						/>
+						<Button variant="outline-success">Search</Button>
+					</Form> */}
+						<Nav
+							className="me-auto my-2 my-lg-0"
+							style={{ maxHeight: "100px" }}
+							navbarScroll>
+							<NavLink
+								to="/myreview"
+								className="text-white text-decoration-none text-white  shadow-md rounded px-2">
+								<>Myreview</>
+							</NavLink>
+							<>
 								<>
-									<NavLink
-										className="px-2 text-decoration-none text-white"
-										to="/register">
-										Register
-									</NavLink>
-									<NavLink
-										className="px-2 text-decoration-none text-white"
-										to="/login">
-										Login
-									</NavLink>
+									<>
+										{!user?.uid ? (
+											<>
+												<NavLink
+													className="px-2 text-decoration-none text-white  shadow-md rounded mx-2 px-2"
+													to="/login">
+													Login
+												</NavLink>
+												<NavLink
+													className="px-2 text-decoration-none text-white  shadow-md rounded  mx-2 px-2"
+													to="/register">
+													Register
+												</NavLink>
+											</>
+										) : (
+											<>
+												<>
+													<Link className="mx-2 text-warning  shadow-md rounded px-2">
+														<small className="text-white  text-warning text-xs border border-slate-400 p-1 rounded-2xl no-underline left-5">
+															{user?.displayName ||
+																user?.email}
+														</small>
+													</Link>
+													<div
+														className="tooltipcustomhover  w-12 mask mask-hexagon"
+														data-tip="hello">
+														{user.photoURL ? (
+															// <img
+															// 	className="tooltipcustomhover"
+															// 	src={
+															// 		user?.photoURL
+															// 	}
+															// 	alt=""
+															// 	/>
+															<PhotoProvider>
+																<PhotoView
+																	src={
+																		user?.photoURL
+																	}>
+																	<img
+																		className="tooltipcustomhover"
+																		src={
+																			user?.photoURL
+																		}
+																		alt=""
+																	/>
+																</PhotoView>
+															</PhotoProvider>
+														) : (
+															<FaUserCheck className="p-0 m-0 fs-3 inline-block"></FaUserCheck>
+														)}
+													</div>
+													<NavLink
+														className="px-2 text-decoration-none text-white "
+														to="/services">
+														<>Add service</>
+													</NavLink>
+													<button
+														className="btn d-inline-block btn-outline btn-warning  btn-sm text-white mx-2 px-2"
+														onClick={
+															handleSignouthandle
+														}>
+														SignOut
+													</button>
+													<NavLink
+														className="btn d-inline-block btn-outline  shadow-md px-2 text-decoration-none text-white btn-sm"
+														to="/register">
+														Profile Update
+													</NavLink>
+												</>
+											</>
+										)}
+									</>
 								</>
-							) : (
-								<>
-									<Nav.Link eventKey={2}></Nav.Link>
-
-									<span className="tooltipcustomhover px-2">
-										<div className="tooltipcustomhover avatar align-items-center position-relative">
-											<NavLink to="/myreview">
-												<a>My review</a>
-											</NavLink>
-											<NavLink to="/addservice">
-												<a>Add service</a>
-											</NavLink>
-											<small className="text-white tooltipcustom position-absolute -bottom-3 -left-5">
-												{user?.displayName ||
-													user?.email}
-											</small>
-											<div
-												className="tooltipcustomhover  w-12 mask mask-hexagon"
-												data-tip="hello">
-												{user.photoURL ? (
-													<img
-														className="tooltipcustomhover"
-														src={user?.photoURL}
-														alt=""
-													/>
-												) : (
-													<FaUserCheck className="p-0 m-0 fs-3 inline-block"></FaUserCheck>
-												)}
-											</div>
-
-											<button
-												className=" btn rounded-full btn-outline-warning  btn-sm text-white mx-2 px-2"
-												onClick={handleSignouthandle}>
-												SignOut
-											</button>
-										</div>
-									</span>
-								</>
-							)}
-						</div>
-					</ul>
-				</div>
-			</div>
-			<div className="navbar-center">
-				<a className="btn btn-ghost normal-case text-xl py-2 ">
-					Repair Service
-				</a>
-				<NavLink to="/">
-					<a>Homepage</a>
-				</NavLink>
-				<NavLink to={"/blog"}>
-					<a>Blog</a>
-				</NavLink>
-				<NavLink to="/services">
-					<a>Services</a>
-				</NavLink>
-				<ul tabIndex={0} className=" normal-case text-xl py-2  ">
-					<div id="responsive-navbar-nav tooltipcustomhover">
-						<div>
-							{!user?.uid ? (
-								<>
-									<NavLink
-										className="px-2 text-decoration-none text-white"
-										to="/register">
-										Register
-									</NavLink>
-									<NavLink
-										className="px-2 text-decoration-none text-white"
-										to="/login">
-										Login
-									</NavLink>
-								</>
-							) : (
-								<>
-									<Nav.Link eventKey={2}></Nav.Link>
-
-									<span className="tooltipcustomhover px-2">
-										<div className="tooltipcustomhover avatar align-items-center position-relative">
-											<NavLink to="/myreview">
-												<a>My review</a>
-											</NavLink>
-											<NavLink to="/addservice">
-												<a>Add service</a>
-											</NavLink>
-											<small className="text-white tooltipcustom position-absolute -bottom-3 -left-5">
-												{user?.displayName ||
-													user?.email}
-											</small>
-											<div
-												className="tooltipcustomhover  w-12 mask mask-hexagon"
-												data-tip="hello">
-												{user.photoURL ? (
-													<img
-														className="tooltipcustomhover"
-														src={user?.photoURL}
-														alt=""
-													/>
-												) : (
-													<FaUserCheck className="p-0 m-0 fs-3 inline-block"></FaUserCheck>
-												)}
-											</div>
-
-											<button
-												className=" btn rounded-full btn-outline-warning  btn-sm text-white mx-2 px-2"
-												onClick={handleSignouthandle}>
-												SignOut
-											</button>
-										</div>
-									</span>
-								</>
-							)}
-						</div>
-					</div>
-				</ul>
-			</div>
-			<div className="navbar-end">
-				<button className="btn btn-ghost btn-circle">
-					<div className="indicator">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							className="h-5 w-5"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor">
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth="2"
-								d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-							/>
-						</svg>
-						<span className="badge badge-xs badge-primary indicator-item"></span>
-					</div>
-				</button>
-			</div>
-			<ToastContainer />
+							</>
+						</Nav>
+					</Navbar.Collapse>
+				</Container>
+			</Navbar>
 		</div>
 	);
 };

@@ -1,0 +1,8 @@
+/* .img-controler {
+	max-height: min-content;
+	min-width: 100px;
+} */
+.object-conttrol {
+	max-height: auto;
+        color:black;
+}
